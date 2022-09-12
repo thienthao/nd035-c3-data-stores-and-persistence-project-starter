@@ -1,6 +1,4 @@
-package com.udacity.jdnd.course3.critter.user;
-
-import com.udacity.jdnd.course3.critter.pet.Pet;
+package com.udacity.jdnd.course3.critter.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
