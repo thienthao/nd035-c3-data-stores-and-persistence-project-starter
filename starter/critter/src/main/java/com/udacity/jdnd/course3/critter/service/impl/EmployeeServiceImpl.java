@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.service.impl;
 
+import com.udacity.jdnd.course3.critter.exception.NotFoundException;
 import com.udacity.jdnd.course3.critter.model.Employee;
 import com.udacity.jdnd.course3.critter.repository.EmployeeRepository;
 import com.udacity.jdnd.course3.critter.service.EmployeeService;
@@ -19,5 +20,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee saveEmployee(Employee employee) {
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public Employee getEmployeeById(Long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Cannot find Employee with id " + id));
     }
 }
