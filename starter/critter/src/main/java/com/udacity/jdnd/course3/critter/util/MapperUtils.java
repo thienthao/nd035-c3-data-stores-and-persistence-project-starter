@@ -56,6 +56,12 @@ public class MapperUtils {
         return modelMapper.map(dto, Employee.class);
     }
 
+    public static List<EmployeeDTO> convertToEmployeeDtoList(List<Employee> employeeList) {
+        return employeeList.stream()
+                .map(MapperUtils::convertToEmployeeDto)
+                .collect(Collectors.toList());
+    }
+
     // Pet
     public static PetDTO convertToPetDto(Pet pet) {
         ModelMapper modelMapper = new ModelMapper();
