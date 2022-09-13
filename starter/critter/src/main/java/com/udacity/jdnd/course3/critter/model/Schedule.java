@@ -12,10 +12,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -28,11 +28,17 @@ public class Schedule {
     @Column(name = "schedule_id")
     private long id;
 
-    @ManyToMany(mappedBy = "schedules")
-    private List<Employee> employees = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "employee_schedule",
+            joinColumns = @JoinColumn(name = "schedule_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id"))
+    private List<Employee> employees;
 
-    @ManyToMany(mappedBy = "schedules")
-    private List<Pet> pets = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "pet_schedule",
+            joinColumns = @JoinColumn(name = "schedule_id"),
+            inverseJoinColumns = @JoinColumn(name = "pet_id"))
+    private List<Pet> pets;
 
     @Column(name = "date")
     private LocalDate date;

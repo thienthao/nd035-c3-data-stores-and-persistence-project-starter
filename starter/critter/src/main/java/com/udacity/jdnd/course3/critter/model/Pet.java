@@ -43,10 +43,7 @@ public class Pet {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToMany
-    @JoinTable(name = "pet_schedule",
-            joinColumns = @JoinColumn(name = "pet_id"),
-            inverseJoinColumns = @JoinColumn(name = "schedule_id"))
+    @ManyToMany(mappedBy = "pets")
     private List<Schedule> schedules;
 
     public long getId() {

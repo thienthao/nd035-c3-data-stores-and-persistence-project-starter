@@ -3,9 +3,11 @@ package com.udacity.jdnd.course3.critter.util;
 import com.udacity.jdnd.course3.critter.dto.CustomerDTO;
 import com.udacity.jdnd.course3.critter.dto.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.dto.PetDTO;
+import com.udacity.jdnd.course3.critter.dto.ScheduleDTO;
 import com.udacity.jdnd.course3.critter.model.Customer;
 import com.udacity.jdnd.course3.critter.model.Employee;
 import com.udacity.jdnd.course3.critter.model.Pet;
+import com.udacity.jdnd.course3.critter.model.Schedule;
 import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
@@ -72,6 +74,36 @@ public class MapperUtils {
     public static List<PetDTO> convertToPetDtoList(List<Pet> petList) {
         return petList.stream()
                 .map(MapperUtils::convertToPetDto)
+                .collect(Collectors.toList());
+    }
+
+    // Schedule
+    public static ScheduleDTO convertToScheduleDto(Schedule schedule) {
+        ModelMapper modelMapper = new ModelMapper();
+        ScheduleDTO response = modelMapper.map(schedule, ScheduleDTO.class);
+        List<Long> employeeIds = schedule.getEmployees()
+                .stream()
+                .map(Employee::getId)
+                .collect(Collectors.toList());
+
+        List<Long> petIds = schedule.getPets()
+                .stream()
+                .map(Pet::getId)
+                .collect(Collectors.toList());
+
+        response.setEmployeeIds(employeeIds);
+        response.setPetIds(petIds);
+        return response;
+    }
+
+    public static Schedule convertToSchedule(ScheduleDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(dto, Schedule.class);
+    }
+
+    public static List<ScheduleDTO> convertToScheduleDtoList(List<Schedule> scheduleList) {
+        return scheduleList.stream()
+                .map(MapperUtils::convertToScheduleDto)
                 .collect(Collectors.toList());
     }
 }

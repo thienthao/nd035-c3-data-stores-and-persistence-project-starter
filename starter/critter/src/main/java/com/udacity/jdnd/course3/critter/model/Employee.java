@@ -43,10 +43,7 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private Set<DayOfWeek> daysAvailable;
 
-    @ManyToMany
-    @JoinTable(name = "employee_schedule",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "schedule_id"))
+    @ManyToMany(mappedBy = "employees")
     private List<Schedule> schedules;
 
     public long getId() {
