@@ -1,7 +1,8 @@
 package com.udacity.jdnd.course3.critter.service;
 
-import org.springframework.stereotype.Service;
+import com.udacity.jdnd.course3.critter.model.Employee;
 
-@Service
 public interface EmployeeService {
+
+    Employee saveEmployee(Employee employee);
 }

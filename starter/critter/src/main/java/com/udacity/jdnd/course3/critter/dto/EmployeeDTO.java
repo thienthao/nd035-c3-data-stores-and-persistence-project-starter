@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.udacity.jdnd.course3.critter.enumeration.EmployeeSkill;
 
 import java.time.DayOfWeek;
@@ -9,6 +10,7 @@ import java.util.Set;
  * Represents the form that employee request and response data takes. Does not map
  * to the database directly.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EmployeeDTO {
     private long id;
     private String name;

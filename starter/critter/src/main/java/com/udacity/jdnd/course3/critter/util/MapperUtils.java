@@ -1,7 +1,9 @@
 package com.udacity.jdnd.course3.critter.util;
 
 import com.udacity.jdnd.course3.critter.dto.CustomerDTO;
+import com.udacity.jdnd.course3.critter.dto.EmployeeDTO;
 import com.udacity.jdnd.course3.critter.model.Customer;
+import com.udacity.jdnd.course3.critter.model.Employee;
 import com.udacity.jdnd.course3.critter.model.Pet;
 import org.modelmapper.ModelMapper;
 
@@ -13,15 +15,15 @@ public class MapperUtils {
 
     public static CustomerDTO convertToCustomerDto(Customer customer) {
         ModelMapper modelMapper = new ModelMapper();
-        CustomerDTO dto = modelMapper.map(customer, CustomerDTO.class);
+        CustomerDTO response = modelMapper.map(customer, CustomerDTO.class);
         List<Pet> pets = customer.getPets();
         if (pets != null && !pets.isEmpty()) {
             List<Long> petIds = pets.stream()
                     .map(Pet::getId)
                     .collect(Collectors.toList());
-            dto.setPetIds(petIds);
+            response.setPetIds(petIds);
         }
-        return dto;
+        return response;
     }
 
     public static Customer convertToCustomer(CustomerDTO dto) {
@@ -37,5 +39,15 @@ public class MapperUtils {
                     .collect(Collectors.toList());
         }
         return response;
+    }
+
+    public static EmployeeDTO convertToEmployeeDto(Employee employee) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(employee, EmployeeDTO.class);
+    }
+
+    public static Employee convertToEmployee(EmployeeDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(dto, Employee.class);
     }
 }
