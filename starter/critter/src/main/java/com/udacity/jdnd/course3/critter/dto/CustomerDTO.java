@@ -1,11 +1,14 @@
 package com.udacity.jdnd.course3.critter.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.List;
 
 /**
  * Represents the form that customer request and response data takes. Does not map
  * to the database directly.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomerDTO {
     private long id;
     private String name;
