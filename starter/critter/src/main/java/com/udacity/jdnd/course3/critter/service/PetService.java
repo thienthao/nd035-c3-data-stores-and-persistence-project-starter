@@ -2,7 +2,13 @@ package com.udacity.jdnd.course3.critter.service;
 
 import com.udacity.jdnd.course3.critter.model.Pet;
 
+import java.util.List;
+
 public interface PetService {
 
     Pet savePet(Pet pet);
+
+    Pet getPetById(Long id);
+
+    List<Pet> getAllPets();
 }

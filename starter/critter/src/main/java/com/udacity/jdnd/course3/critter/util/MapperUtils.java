@@ -68,4 +68,10 @@ public class MapperUtils {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(dto, Pet.class);
     }
+
+    public static List<PetDTO> convertToPetDtoList(List<Pet> petList) {
+        return petList.stream()
+                .map(MapperUtils::convertToPetDto)
+                .collect(Collectors.toList());
+    }
 }

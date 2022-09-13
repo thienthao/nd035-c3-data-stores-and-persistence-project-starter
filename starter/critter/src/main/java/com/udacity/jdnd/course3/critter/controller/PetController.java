@@ -32,7 +32,7 @@ public class PetController {
 
     @PostMapping
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
-        Customer customer = customerService.findById(petDTO.getOwnerId());
+        Customer customer = customerService.getCustomerById(petDTO.getOwnerId());
         Pet pet = MapperUtils.convertToPet(petDTO);
         pet.setCustomer(customer);
         return MapperUtils.convertToPetDto(petService.savePet(pet));
@@ -40,12 +40,12 @@ public class PetController {
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        return MapperUtils.convertToPetDto(petService.getPetById(petId));
     }
 
     @GetMapping
     public List<PetDTO> getPets() {
-        throw new UnsupportedOperationException();
+        return MapperUtils.convertToPetDtoList(petService.getAllPets());
     }
 
     @GetMapping("/owner/{ownerId}")
