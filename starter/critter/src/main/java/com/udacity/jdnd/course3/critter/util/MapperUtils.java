@@ -5,6 +5,7 @@ import com.udacity.jdnd.course3.critter.model.Customer;
 import com.udacity.jdnd.course3.critter.model.Pet;
 import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,5 +27,15 @@ public class MapperUtils {
     public static Customer convertToCustomer(CustomerDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(dto, Customer.class);
+    }
+
+    public static List<CustomerDTO> convertToCustomerDtoList(List<Customer> customerList) {
+        List<CustomerDTO> response = new ArrayList<>();
+        if (!customerList.isEmpty()) {
+            response = customerList.stream()
+                    .map(MapperUtils::convertToCustomerDto)
+                    .collect(Collectors.toList());
+        }
+        return response;
     }
 }

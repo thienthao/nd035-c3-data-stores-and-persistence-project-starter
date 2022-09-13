@@ -42,7 +42,8 @@ public class UserController {
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers() {
-        throw new UnsupportedOperationException();
+        List<Customer> allCustomers = customerService.getAllCustomers();
+        return MapperUtils.convertToCustomerDtoList(allCustomers);
     }
 
     @GetMapping("/customer/pet/{petId}")
