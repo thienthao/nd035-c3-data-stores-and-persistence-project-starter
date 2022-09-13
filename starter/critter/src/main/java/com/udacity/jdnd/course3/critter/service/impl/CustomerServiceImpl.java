@@ -1,5 +1,6 @@
 package com.udacity.jdnd.course3.critter.service.impl;
 
+import com.udacity.jdnd.course3.critter.exception.NotFoundException;
 import com.udacity.jdnd.course3.critter.model.Customer;
 import com.udacity.jdnd.course3.critter.repository.CustomerRepository;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
@@ -26,5 +27,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
+    }
+
+    @Override
+    public Customer findById(Long id) {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Cannot find Customer with id " + id));
     }
 }
