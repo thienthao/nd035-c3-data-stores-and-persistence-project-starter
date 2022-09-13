@@ -6,6 +6,7 @@ import com.udacity.jdnd.course3.critter.model.Pet;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
 import com.udacity.jdnd.course3.critter.service.PetService;
 import com.udacity.jdnd.course3.critter.util.MapperUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,20 +23,16 @@ import java.util.List;
 @RequestMapping("/pet")
 public class PetController {
 
-    private final PetService petService;
-    private final CustomerService customerService;
+    @Autowired
+    private PetService petService;
 
-    public PetController(PetService petService, CustomerService customerService) {
-        this.petService = petService;
-        this.customerService = customerService;
-    }
+    @Autowired
+    private CustomerService customerService;
 
     @PostMapping
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
-        Customer customer = customerService.getCustomerById(petDTO.getOwnerId());
         Pet pet = MapperUtils.convertToPet(petDTO);
-        pet.setCustomer(customer);
-        return MapperUtils.convertToPetDto(petService.savePet(pet));
+        return MapperUtils.convertToPetDto(petService.savePet(pet, petDTO.getOwnerId()));
     }
 
     @GetMapping("/{petId}")
@@ -50,6 +47,6 @@ public class PetController {
 
     @GetMapping("/owner/{ownerId}")
     public List<PetDTO> getPetsByOwner(@PathVariable long ownerId) {
-        throw new UnsupportedOperationException();
+        return MapperUtils.convertToPetDtoList(petService.getPetsByOwnerId(ownerId));
     }
 }

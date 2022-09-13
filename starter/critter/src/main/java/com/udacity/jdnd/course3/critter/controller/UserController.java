@@ -8,6 +8,7 @@ import com.udacity.jdnd.course3.critter.model.Employee;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
 import com.udacity.jdnd.course3.critter.service.EmployeeService;
 import com.udacity.jdnd.course3.critter.util.MapperUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,14 +31,11 @@ import java.util.Set;
 @RequestMapping("/user")
 public class UserController {
 
-    private final CustomerService customerService;
+    @Autowired
+    private CustomerService customerService;
 
-    private final EmployeeService employeeService;
-
-    public UserController(CustomerService customerService, EmployeeService employeeService) {
-        this.customerService = customerService;
-        this.employeeService = employeeService;
-    }
+    @Autowired
+    private EmployeeService employeeService;
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
@@ -53,7 +51,7 @@ public class UserController {
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        return MapperUtils.convertToCustomerDto(customerService.getCustomerByPetId(petId));
     }
 
     @PostMapping("/employee")
