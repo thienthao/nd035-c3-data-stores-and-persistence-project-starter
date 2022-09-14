@@ -6,8 +6,10 @@ import com.udacity.jdnd.course3.critter.dto.EmployeeRequestDTO;
 import com.udacity.jdnd.course3.critter.enumeration.EmployeeSkill;
 import com.udacity.jdnd.course3.critter.model.Customer;
 import com.udacity.jdnd.course3.critter.model.Employee;
+import com.udacity.jdnd.course3.critter.model.Pet;
 import com.udacity.jdnd.course3.critter.service.CustomerService;
 import com.udacity.jdnd.course3.critter.service.EmployeeService;
+import com.udacity.jdnd.course3.critter.service.PetService;
 import com.udacity.jdnd.course3.critter.util.MapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.DayOfWeek;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +40,9 @@ public class UserController {
     @Autowired
     private EmployeeService employeeService;
 
+    @Autowired
+    private PetService petService;
+
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO) {
         Customer response = customerService.saveCustomer(MapperUtils.convertToCustomer(customerDTO));
@@ -53,7 +57,8 @@ public class UserController {
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId) {
-        return MapperUtils.convertToCustomerDto(customerService.getCustomerByPetId(petId));
+        Pet pet = petService.getPetById(petId);
+        return MapperUtils.convertToCustomerDto(pet.getCustomer());
     }
 
     @PostMapping("/employee")

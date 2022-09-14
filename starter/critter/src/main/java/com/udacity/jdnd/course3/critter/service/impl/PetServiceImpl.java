@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -26,7 +27,18 @@ public class PetServiceImpl implements PetService {
     public Pet savePet(Pet pet, Long customerId) {
         Customer owner = customerService.getCustomerById(customerId);
         pet.setCustomer(owner);
-        return petRepository.save(pet);
+        pet = petRepository.save(pet);
+
+        List<Pet> petList = owner.getPets();
+        if (petList == null) {
+            petList = new ArrayList<>();
+        }
+        if (!petList.contains(pet)) {
+            petList.add(pet);
+            owner.setPets(petList);
+            customerService.saveCustomer(owner);
+        }
+        return pet;
     }
 
     @Override

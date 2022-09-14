@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -39,11 +38,11 @@ public class Pet {
     @Column(name = "notes")
     private String notes;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Customer.class)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToMany(mappedBy = "pets")
+    @ManyToMany(mappedBy = "pets", targetEntity = Schedule.class)
     private List<Schedule> schedules;
 
     public long getId() {

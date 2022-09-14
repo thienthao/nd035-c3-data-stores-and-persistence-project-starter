@@ -28,7 +28,7 @@ public class Customer {
     @Column(name = "notes")
     private String notes;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pet> pets;
 
     public long getId() {
